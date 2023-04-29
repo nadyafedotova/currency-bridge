@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import { BrowserRouter } from 'react-router-dom';
+import { Header } from './components/Header';
+import { Rectangle } from './components/Rectangle';
+import ConverterDescription from './components/ConverterDescription';
+import Footer from './components/Footer';
+import Converter from './components/Converter';
+import { connect } from 'react-redux';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function App ({ visibility }) {
+    return (
+        <div className="wrapper">
+            <BrowserRouter>
+                <Header/>
+            </BrowserRouter>
+            <Rectangle/>
+            <Converter style={{ display:visibility.converterVisible ? 'block' : 'none' }}/>
+            <ConverterDescription style={{ display:visibility.converterVisible ? 'none' : 'block' }}/>
+            <BrowserRouter>
+                <Footer/>
+            </BrowserRouter>
+        </div>
+    );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+    visibility:state.visibility,
+});
+export default connect(mapStateToProps)(App);
